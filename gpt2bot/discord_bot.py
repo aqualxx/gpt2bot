@@ -59,9 +59,9 @@ class MyClient(discord.Client):
             return
 
         # A command to reset history
-        if message.content == "!reset":
+        if message.content == "!ralorz-reset":
             self.turns = []
-            await message.channel.send("COMMAND !reset: Cleared my chat history!")
+            await message.channel.send("COMMAND !ralorz-reset: Cleared my chat history!")
             return
 
         # Append message to possible messages to answer list
