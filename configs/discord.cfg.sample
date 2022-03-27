@@ -1,0 +1,14 @@
+###################
+#     Discord     #
+###################
+
+[discord]
+
+# The token that the Discord bot requires.
+token = YOUR_TOKEN_HERE
+
+# How many seconds do we wait until the next message.
+delay = 1
+
+# The name of the channel to send a receive messages from.
+channel_name = CHANNEL_NAME_HERE

@@ -4,7 +4,6 @@ import transformers
 import numpy as np
 import random
 
-
 class CustomFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
 
@@ -101,6 +100,11 @@ def parse_config(config_path):
     config = configparser.ConfigParser(allow_no_value=True)
     with open(config_path) as f:
         config.read_file(f)
+    
+    # Read the discord config
+    config_discord = configparser.ConfigParser(allow_no_value=True)
+    with open("configs/discord.cfg") as f:
+        config_discord.read_file(f)
 
     return dict(
         general_params=dict(
@@ -155,6 +159,11 @@ def parse_config(config_path):
             giphy_weirdness=parse_optional_int(config, 'chatbot_params', 'giphy_weirdness'),
             continue_after_restart=parse_optional_bool(config, 'chatbot_params', 'continue_after_restart'),
             data_filename=config.get('chatbot_params', 'data_filename')
+        ),
+        discord=dict(
+            token=config_discord.get('discord', 'token'),
+            delay=parse_optional_int(config_discord, 'discord', 'delay'),
+            channel_name=config_discord.get('discord', 'channel_name')
         )
     )
 

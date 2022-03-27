@@ -1,4 +1,27 @@
-# gpt2bot
+# gpt2bot - Fork with discord functionality added
+
+This fork of gpt2bot adds functionality for Discord.
+
+## How does it work?
+
+The reads all messages on a specific channel and stores these in a list. Every `n` seconds it chooses a random message, generates a answer to this message and posts this in the channel. If the bot get mentioned or recives a answer on one of his messages, it will reply to this in the next response.
+
+## Get started
+
+- Copy `configs/discord.cfg.sample` to `configs/discord.cfg`.
+- Edit the values of `configs/discord.cfg`.
+  - Set `token` to a bot account token, you can access this by creating a bot from the [Discord Developer Portal](https://discord.com/developers/applications/).
+  - Set `delay` to set the seconds between each message.
+  - Set `channel_name` to the channel name that the bot needs to work on.
+- Run the bot using the following command: `python run_bot.py --type=discord --config=medium-cpu.cfg`
+
+## Disclaimer
+
+Selfbot use is prohibited by the Discord terms and can lead to a ban of you Discord account/IP. I am in no way responible for anything (including damage) that this bot creates.
+
+-----------------------------------------------
+
+## gpt2bot (original description)
 
 <img src="https://github.com/polakowo/gpt2bot/blob/master/logo.png?raw=true" width=128>
 
@@ -19,19 +42,19 @@
 🟣   >>> You monster
 ```
 
-gpt2bot is a multi-turn Telegram chatbot powered by neural networks. 
+gpt2bot is a multi-turn Telegram chatbot powered by neural networks.
 
-The bot uses [DialoGPT](https://arxiv.org/abs/1911.00536) - a large-scale pretrained 
-dialogue response generation model, which was trained by Microsoft on 147M multi-turn 
-dialogue from Reddit discussion thread. The human evaluation results indicate that its 
+The bot uses [DialoGPT](https://arxiv.org/abs/1911.00536) - a large-scale pretrained
+dialogue response generation model, which was trained by Microsoft on 147M multi-turn
+dialogue from Reddit discussion thread. The human evaluation results indicate that its
 quality is comparable to human response quality under a single-turn conversation Turing test.
 
 The bot can also use any other text generator supported by [transformers](https://huggingface.co/transformers/).
 
-To further improve dialog generation, the bot uses [DialogRPT](https://arxiv.org/abs/2009.06978) - 
+To further improve dialog generation, the bot uses [DialogRPT](https://arxiv.org/abs/2009.06978) -
 a set of dialog response ranking models trained on 100+ millions of human feedback data.
 
-Since the underlying model was trained on Reddit comment chains, the bot often behaves like 
+Since the underlying model was trained on Reddit comment chains, the bot often behaves like
 a community rather than an individual, which makes it even more fun.
   
 ## How to use?
@@ -42,20 +65,20 @@ Before running a telegram bot, you can test things out in the console.
 
 Follow [the installation steps](https://github.com/polakowo/gpt2bot#locally) and run the script:
 
-```
-$ python run_bot.py --type=console
+```bash
+python run_bot.py --type=console
 ```
 
 To let two bots talk to each other:
 
-```
-$ python run_bot.py --type=dialogue
+```bash
+python run_bot.py --type=dialogue
 ```
 
 ### 1. Set up the bot
 
-1. Register a new Telegram bot via BotFather (see https://core.telegram.org/bots)
-2. Create a new GIPHY app and generate an API key (see https://developers.giphy.com/docs/api/)
+1. Register a new Telegram bot via BotFather (see <https://core.telegram.org/bots>)
+2. Create a new GIPHY app and generate an API key (see <https://developers.giphy.com/docs/api/>)
 
 ### 2. Deploy the bot
 
@@ -67,14 +90,14 @@ $ python run_bot.py --type=dialogue
 
 To get started, first clone this repo:
 
-```
-$ git clone https://github.com/polakowo/gpt2bot.git
-$ cd gpt2bot
+```bash
+git clone https://github.com/polakowo/gpt2bot.git
+cd gpt2bot
 ```
 
 Create and activate an environment (optional):
 
-```
+```bash
 # Using conda
 $ conda create -n gpt2bot python=3.7.6
 $ conda activate gpt2bot
@@ -87,31 +110,31 @@ $ venv\Scripts\activate  # Windows
 
 Install the requirements:
 
-```
-$ pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
 ```
 
 Copy a config (see [available configs](https://github.com/polakowo/gpt2bot#configs)):
 
-```
+```bash
 cp configs/medium-cpu.cfg my_chatbot.cfg
 ```
 
 Set your parameters such as API token in the config:
 
-```
-$ nano my_chatbot.cfg
+```bash
+nano my_chatbot.cfg
 ```
 
 Run the chatbot:
 
-```
-$ python run_bot.py --type=telegram --config=my_chatbot.cfg
+```bash
+python run_bot.py --type=telegram --config=my_chatbot.cfg
 ```
 
-### 3. Start chatting!
+### 3. Start chatting
 
-![](telegram_bot.gif)
+![Telegram Bot Example](telegram_bot.gif)
 
 Just start texting. Append "@gif" for the bot to also generate a GIF. To reset, type "/start".
 
@@ -122,20 +145,20 @@ your conversational style (small talk, fact questions, philosophy - all require 
 Go to your configuration file and slightly change the parameters of the generator.
 The fastest way to assess the quality of your config is to run a short dialogue between two bots.
 
-There are three parameters that make the biggest impact: `temperature`, `top_k` and `top_p`. 
-For example, you might increase the temperature to make the bot crazier, but expect it to be 
-more off-topic. Or you could reduce the temperature for it to make more coherent answers and 
-capture the context better, but expect it to repeat the same utterance (you may also experiment 
+There are three parameters that make the biggest impact: `temperature`, `top_k` and `top_p`.
+For example, you might increase the temperature to make the bot crazier, but expect it to be
+more off-topic. Or you could reduce the temperature for it to make more coherent answers and
+capture the context better, but expect it to repeat the same utterance (you may also experiment
 with `repetition_penalty`). For more tips, see [HuggingFace tutorial](https://huggingface.co/blog/how-to-generate).
 
 Remember that there is no way of finding optimal parameters except by manually tuning them.
 
 ## Configs
 
-* [medium-cpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/medium-cpu.cfg): Medium model, no ranking (CPU)
-* [large-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-gpu.cfg): Large model, no ranking (GPU)
-* [large-updown-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-updown-gpu.cfg): Large model, `updown` ranker (GPU)
-* [large-ensemble-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-ensemble-gpu.cfg): Large model, ensemble of 5 rankers (GPU, >12GB RAM)
+- [medium-cpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/medium-cpu.cfg): Medium model, no ranking (CPU)
+- [large-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-gpu.cfg): Large model, no ranking (GPU)
+- [large-updown-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-updown-gpu.cfg): Large model, `updown` ranker (GPU)
+- [large-ensemble-gpu.cfg](https://github.com/polakowo/gpt2bot/blob/master/configs/large-ensemble-gpu.cfg): Large model, ensemble of 5 rankers (GPU, >12GB RAM)
 
 ## Credits
 
