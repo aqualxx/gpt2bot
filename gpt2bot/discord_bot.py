@@ -58,6 +58,12 @@ class MyClient(discord.Client):
         if self.get_effective_permissions(message.channel).send_messages == False:
             return
 
+        # A command to reset history
+        if message.content == "!reset":
+            self.turns = []
+            await message.channel.send("COMMAND !reset: Cleared my chat history!")
+            return
+
         # Append message to possible messages to answer list
         self.rec_messages.append(message.content)
 
